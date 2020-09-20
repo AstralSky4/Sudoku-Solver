@@ -37,7 +37,10 @@ function startGame() {
         let keyPressed = inputHandler.keyPress(e.keyCode);
         if (keyPressed) {
             board.tileSet.forEach(square => {
-                if (square.clicked) square.number = (keyPressed == -1) ? null : keyPressed;
+                if (square.clicked) {
+                    if (keyPressed == -1) square.input(null);
+                    else if (board.checkLegalMove(keyPressed, square)) square.input(keyPressed);
+                }
             });
         }
     })

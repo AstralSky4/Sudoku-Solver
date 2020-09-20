@@ -1,6 +1,7 @@
 class Square {
-    constructor(i, s) {
+    constructor(i, s, b) {
         this.squareIndex = i;
+        this.boxNum = b;
         this.number;
         this.size = s;
         this.x = (i % 9) * s;

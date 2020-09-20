@@ -4,9 +4,36 @@ class Board {
         this.height = h;
         this.squareWidth = this.width / 9;
         this.tileSet = [];
+        this.boxMap = new Map();
+
+        for (let i = 0; i < 9; i++) this.boxMap.set(i, []);
+
         for (let square = 0; square < 81; square++) {
-            this.tileSet.push(new Square(square, this.squareWidth));
+            let boxNum = Math.floor((square % 9) / 3) + Math.floor(Math.floor(square / 9) / 3) * 3;
+            let newSquare = new Square(square, this.squareWidth, boxNum);
+
+            this.boxMap.get(boxNum).push(newSquare);
+            this.tileSet.push(newSquare);
         }
+    }
+
+    checkLegalMove(num, tile) {
+        let row = Math.floor(tile.squareIndex / 9);
+        let col = tile.squareIndex % 9;
+
+        for (let i = row * 9; i < row * 9 + 9; i++) {
+            if (this.tileSet[i].number == num) return false;
+        }
+
+        for (let i = col; i < col + (9 * 8); i += 9) {
+            if (this.tileSet[i].number == num) return false;
+        }
+
+        for (let i = 0; i < 9; i++) {
+            if (this.boxMap.get(tile.boxNum)[i].number == num) return false;
+        }
+
+        return true;
     }
 
     draw() {
