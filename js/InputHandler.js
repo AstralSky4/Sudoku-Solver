@@ -10,6 +10,15 @@ class InputHandler {
         if (e == 8) {
             return -1;
         }
+        if (e == 13) {
+            return -2;
+        }
+        if (e == 32) {
+            return -3;
+        }
+        if (e == 27) {
+            return -4;
+        }
     }
 
     onHover(x, y, size) {

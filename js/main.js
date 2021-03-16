@@ -11,11 +11,13 @@ const COLORS = {
 
 let board;
 let inputHandler;
+let solver;
 
 function startGame() {
 
     board = new Board(c.width, c.height);
     inputHandler = new InputHandler();
+    solver = new AI(board);
 
     c.addEventListener("click", (e) => {
         let clicked = inputHandler.onHover(e.offsetX, e.offsetY, board.squareWidth);
@@ -35,13 +37,29 @@ function startGame() {
 
     document.addEventListener("keydown", (e) => {
         let keyPressed = inputHandler.keyPress(e.keyCode);
-        if (keyPressed) {
+        if (keyPressed > 0) {
             board.tileSet.forEach(square => {
-                if (square.clicked) {
-                    if (keyPressed == -1) square.input(null);
-                    else if (board.checkLegalMove(keyPressed, square)) square.input(keyPressed);
-                }
+                if (square.clicked && board.checkLegalMove(keyPressed, square)) square.input(keyPressed);
             });
+        } else if (keyPressed == -1) {
+            board.tileSet.forEach(square => {
+                if (square.clicked) square.input(null);
+            });
+        } else if (keyPressed == -2) {
+            let clicked = false;
+            for (let i = 0; i < 81; i++) {
+                if (board.tileSet[i].clicked) {
+                    board.tileSet[i].unClick();
+                    board.tileSet[i < 80 ? i + 1 : 0].click();
+                    clicked = true;
+                    break;
+                }
+            }
+            if (!clicked) board.tileSet[0].click();
+        } else if (keyPressed == -3) {
+            solver.solve();
+        } else if (keyPressed == -4) {
+            solver.reset();
         }
     })
 

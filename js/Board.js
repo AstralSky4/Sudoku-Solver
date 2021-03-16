@@ -25,7 +25,7 @@ class Board {
             if (this.tileSet[i].number == num) return false;
         }
 
-        for (let i = col; i < col + (9 * 8); i += 9) {
+        for (let i = col; i < col + (9 * 9); i += 9) {
             if (this.tileSet[i].number == num) return false;
         }
 
