@@ -62,15 +62,15 @@ class AI {
                     let found = false;
 
                     for (let i = row * 9; i < row * 9 + 9; i++) {
-                        if (!this.possibleNums.get(i).includes(num)) found = true;
+                        if (this.possibleNums.get(i).includes(num)) found = true;
                     }
             
-                    for (let i = col; i < col + (9 * 8); i += 9) {
-                        if (!this.possibleNums.get(i).includes(num)) found = true;
+                    for (let i = col; i < col + (9 * 9); i += 9) {
+                        if (this.possibleNums.get(i).includes(num)) found = true;
                     }
             
                     for (let i = 0; i < 9; i++) {
-                        if (!this.possibleNums.get(this.board.boxMap.get(square.boxNum)[i].squareIndex).includes(num)) found = true;
+                        if (this.possibleNums.get(this.board.boxMap.get(square.boxNum)[i].squareIndex).includes(num)) found = true;
                     }
 
                     if (!found) {

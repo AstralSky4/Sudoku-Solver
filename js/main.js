@@ -17,7 +17,6 @@ function startGame() {
 
     board = new Board(c.width, c.height);
     inputHandler = new InputHandler();
-    solver = new AI(board);
 
     c.addEventListener("click", (e) => {
         let clicked = inputHandler.onHover(e.offsetX, e.offsetY, board.squareWidth);
@@ -57,9 +56,10 @@ function startGame() {
             }
             if (!clicked) board.tileSet[0].click();
         } else if (keyPressed == -3) {
+            solver = new AI(board);
             solver.solve();
         } else if (keyPressed == -4) {
-            solver.reset();
+            if (solver) solver.reset();
         }
     })
 
